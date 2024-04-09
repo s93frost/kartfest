@@ -1,0 +1,205 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Results
+{% endblock %}
+
+{% block main %}
+    <script type="text/javascript">
+    // this is for creating the drop down lists from the seasons and racenames variable returned by the API
+    // dependant on which year and races there are
+        var subjectObject = {{ seasons_and_names|safe }}
+        window.onload = function() {
+            var year = document.getElementById("year");
+            var racename = document.getElementById("racename");
+            for (var x in subjectObject) {
+                year.options[year.options.length] = new Option(x, x);
+            }
+            year.onchange = function() {
+            //empty driver dropdown
+                racename.length = 1;
+            //display correct values
+                var z = subjectObject[this.value];
+                for (var i = 0; i < z.length; i++) {
+                    racename.options[racename.options.length] = new Option(z[i], z[i]);
+                }
+            }
+        }
+    </script>
+
+    <div class="card text-muted mb-3">
+        <div class="card-header">
+            <h4 class="page_header"> Kartfest Results (2022 - present) </h4>
+            <form action="/results" method="post">
+                <div class="row justify-content-center">
+                    <div class="col-auto">
+                        <select class="btn btn-warning" required name="year" id="year">
+                            <option disabled selected> Year </option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <select class="btn btn-warning" required name="racename" id="racename">
+                            <option disabled selected> Race </option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                    <div class="col-auto">
+                        <a class="btn btn-danger" href="/results">Reset</a>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="card-body">
+            {% if year and racename %}
+                <h4 class="card-text"> <b>Race:</b> {{ racename }} </h4>
+                <h4 class="card-text"> <b>Season:</b> {{ year}} </h4>
+            {% else %}
+                <h4 class="card-text"> <b>Race:</b> All races</h4>
+                <h4 class="card-text"> <b>Season:</b> All years </h4>
+            {% endif %}
+        </div>
+        <div class="card-footer">
+        </div>
+    </div>
+    </div>
+
+    <br>
+
+    {% if year and racename %}
+
+        <div class="card bg-light mb-3">
+            <div class="card-header bg-warning text-black"> <b> Race Winner </b>
+                ({{ racename }}, {{ year}})
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-success table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th> Driver Name </th>
+                                <th> Team Name </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for x in data %}
+                                {% if data[x][0] == 1 %}
+                                <tr>
+                                    <td> {{ data[x][1] }} </td>
+                                    <td id="{{ data[x][2] }}"> {{ data[x][2] }} </td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <br>
+
+    <div class="card bg-light mb-3">
+        <div class="card-header bg-warning text-black"> <b>Fastest Lap</b> {% if year and racename %}
+            ({{ racename }}, {{ year}})
+        {% else %}
+            (All races, All years)
+        {% endif %}
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-sm table-success table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th> Driver Name </th>
+                            <th> Lap Time (secs) </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> {{ fastest_person[0] }} </td>
+                            <td> {{ fastest_person[1] }} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="card bg-light mb-3">
+        <div class="card-header bg-warning text-dark"> <b>Race Results</b> {% if year and racename %}
+            ({{ racename }}, {{ year}})
+        {% else %}
+            (All races, All years)
+        {% endif %}
+        </div>
+        <div class="card-body bg-light">
+            <div class="table-responsive">
+                <table id="results" class="table table-sm table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            {% for x in ndf %}
+                                <th> {{ x }} </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for x in data %}
+                            <tr>
+                                <td id="_{{ data[x][0] }}"> {{ data[x][0] }} </td>
+                                <td> {{ data[x][1] }} </td>
+                                <td id="{{ data[x][2] }}"> {{ data[x][2] }} </td>
+                                <td> {{ data[x][3] }} </td>
+                                <td> {{ data[x][4] }} </td>
+                                <td> {{ data[x][5] }} </td>
+                                <td> {{ data[x][6] }} </td>
+                                <td> {{ data[x][7] }} </td>
+                                <td> {{ data[x][8] }} </td>
+                                <td id="{{ data[x][9] }}"> {{ data[x][9] }} </td>
+                                <td> {{ data[x][10] }} </td>
+                                <td> {{ data[x][11] }} </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-danger" type="buton" onclick="export_to_csv()"> Download as CSV </button>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    // this is the javascript for creating a downloadable csv from the result data table
+    // first function is for creating csv data from table
+        function export_to_csv() {
+            var data = [];
+            var row = document.querySelectorAll("#results tr");
+            for (var i = 0; i < row.length; i++) {
+                var column = row[i].querySelectorAll('#results td,th');
+                var sheet_row = [];
+                for (var x = 0; x < column.length; x++) {
+                    sheet_row.push(column[x].innerHTML);
+                }
+                data.push(sheet_row.join(","));
+            }
+            data = data.join('\n');
+            csv_download(data);
+        }
+
+    // this function then downloads the data in the previous function
+        function csv_download(data) {
+            csv = new Blob([data], {
+                type: "text/csv"
+            });
+            var download = document.createElement('a');
+            download.download = "races.csv";
+            var url = window.URL.createObjectURL(csv);
+            download.href = url;
+            download.click();
+        }
+    </script>
+
+{% endblock %}

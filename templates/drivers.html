@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Drivers
+{% endblock %}
+
+{% block main %}
+
+    <div class="card text-muted mb-3">
+        <div class="card-header">
+            <h4 class="page_header"> Kartfest Drivers (2022 - present) </h4>
+        </div>
+        <div class="card-body">
+            See below for details of Kartfest Drivers for all years
+        </div>
+    </div>
+
+    <div class="row gx-4 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center">
+        {% for x in driver_data%}
+            <div class="col mb-5">
+                <div class="card">
+                    <div class="driver_header" id="{{ driver_data[x][2] }}">
+                        <h4> {{ driver_data[x][1] }} </h4>
+                    </div>
+                    <div class="card-body" id="team-card">
+                        <h6 class="card-title"> Fastest Lap All Time: <i class="outline"> {{ driver_data[x][12] }} </i> </h6>
+                        <h6 class="card-title"> Last Race: <i class="outline"> {{ driver_data[x][13] }} </i> </h6>
+                        <h6 class="card-title"> Years Raced: <i class="outline"> {{ driver_data[x][14] }}</i> </h6>
+                        <h6 class="card-title"> Highest Finish: <i class="outline"> {{ driver_data[x][15] }} </i> </h6>
+                        <div>
+                            <img class="driver_logo" src="/static/driver_pics/{{driver_data[x][1]}}.png" alt="{{driver_data[x][1]}}">
+                        </div>
+                    </div>
+
+                    <div class="driver_header" id="{{ driver_data[x][2] }}">
+                        <h5> {{driver_data[x][2]}} </h5>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

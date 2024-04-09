@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Constructors' Championships
+{% endblock %}
+
+{% block main %}
+
+    <div class="card text-muted mb-3">
+        <div class="card-header">
+            <h4 class="page_header"> Kartfest Constructors' Championships (2022 - present) </h4>
+        </div>
+        <div class="card-body">
+            See below for details of Kartfest Constructors' Championships for all years
+        </div>
+    </div>
+
+    <div class="card bg-light mb-3">
+        <div class="card-header bg-warning text-black"> Constructors' Championship <b>2023</b> </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="results" class="table table-sm table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            {% for x in pf23 %}
+                                <th> {{ x }} </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for x in team_data23 %}
+                            <tr>
+                                <td id="{{ team_data23[x][0] }}"> {{ team_data23[x][0] }} </td>
+                                <td> {{ team_data23[x][1]|round|int }} </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-danger" type="buton" onclick="export_to_csv()"> Download as CSV </button>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="card bg-light mb-3">
+        <div class="card-header bg-warning text-black"> Constructors' Championship <b>2022</b> </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="results" class="table table-sm table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            {% for x in pf22 %}
+                                <th> {{ x }} </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for x in team_data22 %}
+                            <tr>
+                                <td id="{{ team_data22[x][0] }}"> {{ team_data22[x][0] }} </td>
+                                <td> {{ team_data22[x][1]|round|int }} </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-danger" type="buton" onclick="export_to_csv()"> Download as CSV </button>
+        </div>
+    </div>
+
+    <br>
+
+{% endblock %}

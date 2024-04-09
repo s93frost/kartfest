@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Drivers Championship
+{% endblock %}
+
+{% block main %}
+
+    <div class="card text-muted mb-3">
+        <div class="card-header">
+            <h4 class="page_header"> Kartfest Drivers' Championships (2022 - present) </h4>
+        </div>
+        <div class="card-body">
+            See below for details of Kartfest Drivers' Championships for all years
+        </div>
+    </div>
+
+    <br>
+
+    <div class="card bg-light mb-3">
+        <div class="card-header bg-warning text-black"> Drivers' Championship <b>2023</b> </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="results" class="table table-sm table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            {% for x in driver23df %}
+                                <th> {{ x }} </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for x in driver_data23 %}
+                            <tr>
+                                <td> {{ driver_data23[x][0] }} </td>
+                                <td id="{{ driver_data23[x][1] }}"> {{ driver_data23[x][1] }} </td>
+                                <td> {{ driver_data23[x][2]|round|int }} </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-danger" type="buton" onclick="export_to_csv()"> Download as CSV </button>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="card bg-light mb-3">
+        <div class="card-header bg-warning text-black"> Drivers' Championship <b>2022</b> </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="results" class="table table-sm table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            {% for x in driver22df %}
+                                <th> {{ x }} </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for x in driver_data22 %}
+                            <tr>
+                                <td> {{ driver_data22[x][0] }} </td>
+                                <td id="{{ driver_data22[x][1] }}"> {{ driver_data22[x][1] }} </td>
+                                <td> {{ driver_data22[x][2]|round|int }} </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-danger" type="buton" onclick="export_to_csv()"> Download as CSV </button>
+        </div>
+    </div>
+
+    <div class="row gx-4 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center">
+
+
+    </div>
+
+{% endblock %}
