@@ -1,19 +1,3 @@
-from flask import redirect, session
-from functools import wraps
-
-
-'''def login_required(f):
-    """Decorate routes to require login.  https://flask.palletsprojects.com/en/2.3.x/patterns/viewdecorators/#view-decorators"""
-
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
-            return redirect("/login")
-        return f(*args, **kwargs)
-
-    return decorated_function'''
-
-
 def fastest(dict):
     smallest = 20000
     fastest_person = []
