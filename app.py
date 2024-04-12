@@ -1,11 +1,13 @@
+''' This is the main file running the logic for the web app, using Flask to run routes '''
+
 import sqlite3
 import pandas as pd
 
-# from cs50 import SQL
-from flask import Flask, render_template, request
-# from flask import Flask, redirect, session
-# from flask_session import Session
-# from werkzeug.security import check_password_hash, generate_password_hash
+from flask import (
+    Flask,
+    render_template,
+    request,
+)
 
 from helpers import (
     #login_required,
@@ -15,14 +17,6 @@ from helpers import (
 
 # Configure application
 app = Flask(__name__)
-
-# Configure session to use filesystem (instead of signed cookies)
-''' app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app) '''
-
-# Configure CS50 Library to use SQLite database
-# db = SQL("sqlite:///project.db")
 
 # Read sqlite query results into a pandas DataFrame
 con = sqlite3.connect("results.db")
@@ -46,37 +40,10 @@ seasons_and_names = {
 }
 
 
-''' @app.context_processor
-def inject_user():
-    """to create dict of user session to make user available before templates are rendered"""
-    try:
-        x = session["user_id"]
-    except:
-        return {}
-    else:
-        username = db.execute(
-            "SELECT username FROM users WHERE id = ?", session["user_id"]
-        )[0]["username"].capitalize()
-        return dict(user=username) '''
-
-
-''' @app.after_request
-def after_request(response):
-    """This is to ensure that responses are not cached - caching responses
-    is the default for Flask but may mean changes are not picked up by browser"""
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache"
-    return response '''
-
-
 @app.route("/", methods=["GET"])
 #@login_required  # decorator to ensure logged in
 def index():
-    """Show's main page including upcoming race info"""
-    '''username = (
-        #db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
-    )[0]["username"] '''
+    ''' Show's main page including upcoming race info '''
 
     return render_template(
         "index.html",
@@ -88,7 +55,7 @@ def index():
 @app.route("/drivers", methods=["GET"])
 #@login_required  # decorator to ensure logged in
 def drivers():
-    """Gets info for current drivers and displays their info in order of season standings"""
+    ''' Gets info for current drivers and displays their info in order of fastest laps '''
 
     driver_data = dict_creator(driverdf)
 
@@ -103,7 +70,7 @@ def drivers():
 @app.route("/drivers_championship", methods=["GET"])
 #@login_required  # decorator to ensure logged in
 def drivers_championship():
-    """Gets info for current drivers and displays their info in order of season standings"""
+    ''' Gets info for current drivers and displays their info in order of standings '''
 
     driver_data22 = dict_creator(driver22df)
     driver_data23 = dict_creator(driver23df)
@@ -121,7 +88,7 @@ def drivers_championship():
 @app.route("/teams", methods=["GET"])
 #@login_required  # decorator to ensure logged in
 def teams():
-    """Gets info for current teams and displays their info in order of season standings"""
+    ''' Gets info for current teams and displays their info in order of standings '''
 
     team_data22 = dict_creator(pf22)
     team_data23 = dict_creator(pf23)
@@ -140,7 +107,7 @@ def teams():
 @app.route("/results", methods=["GET", "POST"])
 #@login_required  # decorator to ensure logged in
 def results():
-    """Show's results of current race and allows users to select historical races to view"""
+    ''' Show's results of all races and allows users to select historical races to view '''
 
     data = dict_creator(ndf)
     fastest_person = fastest(data)
@@ -186,123 +153,3 @@ def results():
             ndf=ndf,
             data=data,
         )
-
-
-''' @app.route("/login", methods=["GET", "POST"])
-def login():
-    """Log user in"""
-
-    # Forget any user_id
-    session.clear()
-
-    # resets these global variables if not already done
-
-    # User reached route via POST (as by submitting a form via POST)
-    if request.method == "POST":
-        # Ensure username was submitted
-        if not request.form.get("username"):
-            link = "/login"
-            message = "Please provide a username"
-            return render_template("error_message.html", message=message, link=link)
-
-        # Ensure password was submitted
-        elif not request.form.get("password"):
-            link = "/login"
-            message = "Please provide a password"
-            return render_template("error_message.html", message=message, link=link)
-
-        # Query database for username
-        rows = db.execute(
-            "SELECT * FROM users WHERE username = ?", request.form.get("username")
-        )
-
-        # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(
-            rows[0]["hash"], request.form.get("password")
-        ):
-            link = "/login"
-            message = "Your username and password combination was incorrect"
-            return render_template("error_message.html", message=message, link=link)
-
-        # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
-
-        # Redirect user to home page
-        return redirect("/")
-
-    # User reached route via GET (as by clicking a link or via redirect)
-    else:
-        return render_template("login.html") '''
-
-
-''' @app.route("/logout")
-def logout():
-    """Log user out"""
-
-    session.clear()  # Forget any user_id
-
-    # resets these global variables
-
-    # Redirect user to login form
-    return redirect("/") '''
-
-
-''' @app.route("/register", methods=["GET", "POST"])
-def register():
-    """Register user"""
-
-    # Validate submission
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        confirmation = request.form.get("confirmation")
-        hash_password = generate_password_hash(password)
-
-        # if no username
-        if not username:
-            link = "/register"
-            message = "Please enter a username in order to sign up"
-            return render_template("error_message.html", message=message, link=link)
-
-        already_exists = db.execute(
-            "SELECT username FROM users WHERE username = ?", username
-        )
-
-        if already_exists:
-            already_exists = already_exists[0]["username"]
-
-        if username == already_exists:
-            link = "/register"
-            message = "That username already exists"
-            return render_template("error_message.html", message=message, link=link)
-
-        # if no password or password not match confirmation
-        if not password or password != confirmation:
-            link = "/register"
-            message = "Please enter a password and make sure it matches the password confirmation"
-            return render_template("error_message.html", message=message, link=link)
-        # Remember registrant
-        db.execute(
-            "INSERT INTO users (username, hash) VALUES(?, ?)", username, hash_password
-        )
-        # once submitted it redirects to home
-        return redirect("/")
-
-    # if post not detected (i.e if GET) ask user to register
-    else:
-        return render_template("register.html") '''
-
-
-''' @app.route("/deregister", methods=["GET", "POST"])
-@login_required  # decorator to ensure logged in
-def deregister():
-    """deregister user"""
-
-    if request.method == "POST":
-        # Delete user from user table
-        db.execute("DELETE FROM users WHERE id = ?", session["user_id"])
-        # once submitted it redirects to home
-        return redirect("/logout")
-
-    else:
-        #return render_template("deregister.html") '''
