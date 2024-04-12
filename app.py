@@ -10,7 +10,6 @@ from flask import (
 )
 
 from helpers import (
-    #login_required,
     fastest,
     dict_creator,
 )
@@ -41,7 +40,6 @@ seasons_and_names = {
 
 
 @app.route("/", methods=["GET"])
-#@login_required  # decorator to ensure logged in
 def index():
     ''' Show's main page including upcoming race info '''
 
@@ -53,7 +51,6 @@ def index():
 
 
 @app.route("/drivers", methods=["GET"])
-#@login_required  # decorator to ensure logged in
 def drivers():
     ''' Gets info for current drivers and displays their info in order of fastest laps '''
 
@@ -68,7 +65,6 @@ def drivers():
 
 
 @app.route("/drivers_championship", methods=["GET"])
-#@login_required  # decorator to ensure logged in
 def drivers_championship():
     ''' Gets info for current drivers and displays their info in order of standings '''
 
@@ -86,7 +82,6 @@ def drivers_championship():
 
 
 @app.route("/teams", methods=["GET"])
-#@login_required  # decorator to ensure logged in
 def teams():
     ''' Gets info for current teams and displays their info in order of standings '''
 
@@ -105,7 +100,6 @@ def teams():
 
 
 @app.route("/results", methods=["GET", "POST"])
-#@login_required  # decorator to ensure logged in
 def results():
     ''' Show's results of all races and allows users to select historical races to view '''
 
