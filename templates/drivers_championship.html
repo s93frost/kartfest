@@ -18,6 +18,37 @@
     <br>
 
     <div class="card bg-light mb-3">
+        <div class="card-header bg-warning text-black"> Drivers' Championship <b>2024</b> </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="results" class="table table-sm table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            {% for x in driver24df %}
+                                <th> {{ x }} </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for x in driver_data24 %}
+                            <tr>
+                                <td> {{ driver_data24[x][0] }} </td>
+                                <td id="{{ driver_data24[x][1] }}"> {{ driver_data24[x][1] }} </td>
+                                <td> {{ driver_data24[x][2]|round|int }} </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-danger" type="buton" onclick="export_to_csv()"> Download as CSV </button>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="card bg-light mb-3">
         <div class="card-header bg-warning text-black"> Drivers' Championship <b>2023</b> </div>
         <div class="card-body">
             <div class="table-responsive">

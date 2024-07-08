@@ -240,7 +240,7 @@ td:hover {
 }
 
 #AstonMartin {
-    background-color: #00352f;
+    background-color: #024628;
     color: white;
 }
 
@@ -276,6 +276,16 @@ td:hover {
 
 #RBF1Team {
     background-color: #2b7cff;
+    color: white;
+}
+
+#Dry {
+    background-color: #fcd01f;
+    color: rgb(1, 0, 0);
+}
+
+#Wet {
+    background-color: #5c9bff;
     color: white;
 }
 
