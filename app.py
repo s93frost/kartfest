@@ -27,7 +27,7 @@ pf23 = pd.read_sql_query(
 pf22 = pd.read_sql_query(
     "SELECT team_name, ROUND(SUM(points), 0) as total_points from results WHERE year = '2022' GROUP BY team_name ORDER BY total_points desc", con)
 driverdf = pd.read_sql_query(
-    "SELECT *, MIN(fastest) as m, MAX(date), COUNT(DISTINCT(year)), MIN(position) FROM results GROUP BY driver_name ORDER BY m ASC", con)
+    "SELECT *, MIN(fastest) as m, MAX(year), COUNT(DISTINCT(year)), MIN(position) FROM results GROUP BY driver_name ORDER BY m ASC", con)
 driver22df = pd.read_sql_query(
     "SELECT driver_name, team_name, SUM(points) as total_points from results WHERE year = '2022' GROUP BY driver_name ORDER BY total_points desc", con)
 driver23df = pd.read_sql_query(
