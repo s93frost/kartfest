@@ -20,6 +20,8 @@ app = Flask(__name__)
 # Read sqlite query results into a pandas DataFrame
 con = sqlite3.connect("results.db")
 ndf = pd.read_sql_query("SELECT * from results", con)
+pf24 = pd.read_sql_query(
+    "SELECT team_name, ROUND(SUM(points), 0) as total_points from results WHERE year = '2024' GROUP BY team_name ORDER BY total_points desc", con)
 pf23 = pd.read_sql_query(
     "SELECT team_name, ROUND(SUM(points), 0) as total_points from results WHERE year = '2023' GROUP BY team_name ORDER BY total_points desc", con)
 pf22 = pd.read_sql_query(
@@ -30,10 +32,13 @@ driver22df = pd.read_sql_query(
     "SELECT driver_name, team_name, SUM(points) as total_points from results WHERE year = '2022' GROUP BY driver_name ORDER BY total_points desc", con)
 driver23df = pd.read_sql_query(
     "SELECT driver_name, team_name, SUM(points) as total_points from results WHERE year = '2023' GROUP BY driver_name ORDER BY total_points desc", con)
+driver24df = pd.read_sql_query(
+    "SELECT driver_name, team_name, SUM(points) as total_points from results WHERE year = '2024' GROUP BY driver_name ORDER BY total_points desc", con)
 
 # global variables - dictionaries etc - reset at login &
-current_season = 2023
+current_season = 2024
 seasons_and_names = {
+    "2024": ["Heat 1", "Heat 2", "Final"],
     "2023": ["Heat 1", "Heat 2", "Heat 3", "Heat 4", "F2 Final", "F1 Final"],
     "2022": ["Heat 1", "Heat 2", "Final"]
 }
@@ -56,6 +61,8 @@ def drivers():
 
     driver_data = dict_creator(driverdf)
 
+    print(driverdf)
+
     return render_template(
         "drivers.html",
         current_season=current_season,
@@ -70,14 +77,17 @@ def drivers_championship():
 
     driver_data22 = dict_creator(driver22df)
     driver_data23 = dict_creator(driver23df)
+    driver_data24 = dict_creator(driver24df)
 
     return render_template(
         "drivers_championship.html",
         current_season=current_season,
         driver_data22=driver_data22,
         driver_data23=driver_data23,
+        driver_data24=driver_data24,
         driver22df=driver22df,
         driver23df=driver23df,
+        driver24df=driver24df,
     )
 
 
@@ -87,6 +97,7 @@ def teams():
 
     team_data22 = dict_creator(pf22)
     team_data23 = dict_creator(pf23)
+    team_data24 = dict_creator(pf24)
 
     return render_template(
         "teams.html",
@@ -94,8 +105,10 @@ def teams():
         seasons_and_names=seasons_and_names,
         pf22=pf22,
         pf23=pf23,
+        pf24=pf24,
         team_data22=team_data22,
         team_data23=team_data23,
+        team_data24=team_data24,
     )
 
 
