@@ -294,29 +294,43 @@ td:hover {
 }
 
 #_1 {
-    background-color: green;
-    color: white;
+    background-color: #63BE7B;
 }
 
 #_2 {
-    background-color: #90EE90;
+    background-color: #85C87D;
 }
 
 #_3 {
-    background-color: yellow;
+    background-color: #A8D27F;
 }
 
 #_4 {
-    background-color: orange;
+    background-color: #CBDC81;
 }
 
 #_5 {
-    background-color: coral;
+    background-color: #EDE683;
 }
 
 #_6 {
-    background-color: red;
-    color: white;
+    background-color: #FFDD82;
+}
+
+#_7 {
+    background-color: #FDC07C;
+}
+
+#_8 {
+    background-color: #FCA377;
+}
+
+#_9 {
+    background-color: #FA8671;
+}
+
+#_10 {
+    background-color: #F8696B;
 }
 
 .outline {

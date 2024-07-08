@@ -24,6 +24,14 @@
                     </div>
                     <div class="card-body" id="team-card">
                         <h6 class="card-title"> Fastest Lap All Time: <i class="outline"> {{ driver_data[x][14] }} </i> </h6>
+                        <h6 class="card-title"> Fastest Lap (Wet): 
+                        {% for i in driver_data_wet.values() %}
+                            {% if driver_data[x][1] == i[1] %}
+                                <i class="outline"> {{ i[14] }} </i>
+                            {% endif %}
+                        {% endfor %}
+                        </h6>
+                        
                         <h6 class="card-title"> Last Race: <i class="outline"> {{ driver_data[x][15] }} </i> </h6>
                         <h6 class="card-title"> Years Raced: <i class="outline"> {{ driver_data[x][16] }}</i> </h6>
                         <h6 class="card-title"> Highest Finish: <i class="outline"> {{ driver_data[x][17] }} </i> </h6>

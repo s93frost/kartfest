@@ -28,6 +28,8 @@ pf22 = pd.read_sql_query(
     "SELECT team_name, ROUND(SUM(points), 0) as total_points from results WHERE year = '2022' GROUP BY team_name ORDER BY total_points desc", con)
 driverdf = pd.read_sql_query(
     "SELECT *, MIN(fastest) as m, MAX(year), COUNT(DISTINCT(year)), MIN(position) FROM results GROUP BY driver_name ORDER BY m ASC", con)
+driverdfw = pd.read_sql_query(
+    "SELECT *, MIN(fastest) as m, MAX(year), COUNT(DISTINCT(year)), MIN(position) FROM results WHERE condition = 'Wet' GROUP BY driver_name ORDER BY m ASC", con)
 driver22df = pd.read_sql_query(
     "SELECT driver_name, team_name, SUM(points) as total_points from results WHERE year = '2022' GROUP BY driver_name ORDER BY total_points desc", con)
 driver23df = pd.read_sql_query(
@@ -60,13 +62,13 @@ def drivers():
     ''' Gets info for current drivers and displays their info in order of fastest laps '''
 
     driver_data = dict_creator(driverdf)
-
-    print(driverdf)
+    driver_data_wet = dict_creator(driverdfw)
 
     return render_template(
         "drivers.html",
         current_season=current_season,
         driver_data=driver_data,
+        driver_data_wet=driver_data_wet,
         driverdf=driverdf,
     )
 
