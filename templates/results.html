@@ -30,6 +30,7 @@
     <div class="card text-muted mb-3">
         <div class="card-header">
             <h4 class="page_header"> Kartfest Results (2022 - present) </h4>
+            <h6> Select a year and race below for filtered results </h6>
             <form action="/results" method="post">
                 <div class="row justify-content-center">
                     <div class="col-auto">
@@ -66,8 +67,6 @@
     </div>
     </div>
 
-    <br>
-
     {% if year and racename %}
 
         <div class="card bg-light mb-3">
@@ -98,7 +97,6 @@
             </div>
         </div>
     {% endif %}
-    <br>
 
     <div class="card bg-light mb-3">
         <div class="card-header bg-warning text-black"> <b>Fastest Lap</b> {% if year and racename %}
