@@ -16,9 +16,9 @@
         <title>{% block title %}{% endblock %}</title>
     </head>
 
-    <body>
+    <body></body>
 
-        <nav class="bg-white sticky-top navbar navbar-expand-md navbar-light">
+        <nav class="bg-white sticky-top navbar navbar-expand-md navbar-white">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/"><span class="red"><img src="static/favicon.png" alt="logo" width="100px" height="auto"></span></a>
                 <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
@@ -27,13 +27,13 @@
                 <div class="collapse navbar-collapse" id="navbar">
 
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item"><a class="btn btn-success" href="/">Home</a></li>
+                        <li class="nav-item"><a class="btn btn-primary" href="/">Home</a></li>
                         <li class="gap"></li>
-                        <li class="nav-item"><a class="btn btn-success" href="/drivers">Drivers</a></li>
+                        <li class="nav-item"><a class="btn btn-secondary" href="/drivers">Drivers</a></li>
                         <li class="gap"></li>
-                        <li class="nav-item"><a class="btn btn-success" href="/drivers_championship">Drivers' Championship</a></li>
+                        <li class="nav-item"><a class="btn btn-warning" href="/drivers_championship">Drivers' Championship</a></li>
                         <li class="gap"></li>
-                        <li class="nav-item"><a class="btn btn-success" href="/teams">Constructors' Championships </a></li>
+                        <li class="nav-item"><a class="btn btn-warning" href="/teams">Constructors' Championships </a></li>
                         <li class="gap"></li>
                         <li class="nav-item"><a class="btn btn-success" href="/results">Race Results</a></li>
                         <li class="gap"></li>
@@ -53,10 +53,9 @@
             {% block main %}{% endblock %}
         </main>
 
-        <br>
 
-        <footer class="mb-5 text-dark small text-center">
-            <img src="/static/favicon.ico" alt="logo" width="10%" height="10%">
+        <footer class="mb-5 text-white small text-center">
+            <img src="/static/logo.JPG" alt="logo" width="10%" height="10%">
             <b>All data copyright of KartFest©</b>
         </footer>
 
