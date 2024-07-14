@@ -52,7 +52,6 @@ def index():
 
     return render_template(
         "index.html",
-        #username=username,
         current_season=current_season,
     )
 
