@@ -70,7 +70,7 @@
     {% if year and racename %}
 
         <div class="card bg-light mb-3">
-            <div class="card-header bg-warning text-black"> <b> Race Winner </b>
+            <div id="purpleheader" class="card-header"> <b> Race Winner </b>
                 ({{ racename }}, {{ year}})
             </div>
             <div class="card-body">
@@ -99,7 +99,7 @@
     {% endif %}
 
     <div class="card bg-light mb-3">
-        <div class="card-header bg-warning text-black"> <b>Fastest Lap</b> {% if year and racename %}
+        <div id="purpleheader" class="card-header"> <b>Fastest Lap</b> {% if year and racename %}
             ({{ racename }}, {{ year}})
         {% else %}
             (All races, All years)
@@ -127,7 +127,7 @@
 
     <br>
     <div class="card bg-light mb-3">
-        <div class="card-header bg-warning text-dark"> <b>Race Results</b> {% if year and racename %}
+        <div id="purpleheader" class="card-header"> <b>Race Results</b> {% if year and racename %}
             ({{ racename }}, {{ year}})
         {% else %}
             (All races, All years)
